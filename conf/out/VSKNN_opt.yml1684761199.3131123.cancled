@@ -1,0 +1,43 @@
+type: opt # single|window, maybe add opt
+type: opt # single|window, maybe add opt
+key: VkNN_optim_rec15 #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple
+data:
+  name: diginetica #added in the end of the csv names
+  folder: data/diginetica/prepare/
+  prefix: diginetica
+  opts: {sessions_test: 100}
+results:
+  folder: results/rec15/
+
+metrics:
+- class: accuracy.MRR
+  length: [5,10,15,20]
+- class: accuracy.CatD
+  length: [3,5,10,15,20]
+- class: accuracy.HitRate
+  length: [5,10,15,20]
+- class: accuracy_multiple.NDCG
+  length: [3,5,10,15,20]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+- class: time_memory_usage.Memory_usage
+
+optimize:
+  class: accuracy.MRR
+  length: [20]
+  iterations: 100  #optional
+algorithms:
+- class: knn.vsknn.VMContextKNN
+  params: {}
+  params_opt:
+    k: [618, 620,621,622, 623, 624, 625,626,619,617,616]
+    sample_size: [880, 881, 882, 883, 884, 886, 887, 888, 889, 890, 891, 892, 893, 894, 895]
+    weighting: ['same','div','linear','quadratic','log']
+    weighting_score: ['same','div','linear','quadratic','log']
+    idf_weighting: [False,1,2,5,10, 15, 20]
+  key: vstan

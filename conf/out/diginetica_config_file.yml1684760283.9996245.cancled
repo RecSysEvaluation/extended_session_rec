@@ -1,0 +1,32 @@
+type: single # single|window, maybe add opt
+key: kNN_GNN_models #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: diginetica #added in the end of the csv names
+  folder: data/diginetica/prepare/
+  prefix: diginetica
+  opts: {sessions_test: 100, sess_type: None} # sessions_test: "S" or "M" or "L"
+results:
+  folder: results/
+metrics:
+- class: accuracy.MRR
+  length: [3,5,10,15,20]
+- class: accuracy.CatD
+  length: [3,5,10,15,20]
+- class: accuracy.HitRate
+  length: [3,5,10,15,20]
+- class: accuracy_multiple.NDCG
+  length: [3,5,10,15,20]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+algorithms:
+# GNN models
+- class: MGS.MGS.MGS
+  params: {epoch: 12, lr: 0.0045, batch_size: 128, l2: 0.0001, dropout: 0.3} 
+  key: MGS

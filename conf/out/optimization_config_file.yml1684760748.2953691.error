@@ -1,0 +1,97 @@
+type: opt # single|window, maybe add opt
+key: Tuning_of_kNN_GNN_models #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: diginetica #added in the end of the csv names
+  folder: data/diginetica/prepare/
+  prefix: diginetica
+  opts: {sessions_test: 100, sess_type: None} # sessions_test: "S" or "M" or "L"
+results:
+  folder: results/
+metrics:
+- class: accuracy.MRR
+  length: [3,5,10,15,20]
+- class: accuracy.CatD
+  length: [3,5,10,15,20]
+- class: accuracy.HitRate
+  length: [3,5,10,15,20]
+- class: accuracy_multiple.NDCG
+  length: [3,5,10,15,20]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+algorithms:
+- class: knn.vstan.VSKNN_STAN
+  params: { k: 625 , sample_size: 891, lambda_spw: 0.94 , lambda_snh: 55, lambda_inh: 2.4 }
+  key: stan
+- class: knn.stan.STAN
+  params: { k: 630 , sample_size: 3000, lambda_spw: 0.16 , lambda_snh: 530, lambda_inh: 0.57 }
+  key: stan
+- class: knn.vsknn_normal.VMContextKNN
+  params: { k: 624, sample_size: 888, weighting: same , weighting_score: div, idf_weighting: 5}
+  key: vsknn
+# GNN models
+- class: MGS.MGS.MGS
+  params: {epoch: 12}
+  params_opt:
+    lr: [{from: 0.01, to: 0.0001, in: 10, type: float32}]
+    batch_size: [32, 64,128]
+    l2: [0.00001, 0.0001, 0.000001, 0.001]
+    dropout: [0.1,0.2,0.3, 0.5]
+  key: MGS
+- class: TAGNN.TAGNN.TAGNN
+  params: { epoch: 30 }
+  params_opt:
+    lr: [{from: 0.01, to: 0.001, in: 10, type: float32},{from: 0.001, to: 0.0001, in: 10, type: float32}]
+    batch_size: [20, 32, 100, 128, 200]
+    embedding_size: [100, 150]
+    l2: [0.00001, 0.0001]
+  key: TAGNN
+- class: GNRRW.GNRRW.GNRRW
+  params: { epoch: 30}
+  params_opt:
+    lr: [{from: 0.01, to: 0.0001, in: 10, type: float32}]
+    batch_size: [20, 32, 100, 128, 200]
+    hidden_size: [100]
+    l2: [0.00001, 0.00001]
+  key: GNRRW
+- class: GCEGNN.GCEGNN.GCEGNN
+  params: { epoch: 30 }
+  params_opt:
+    lr: [{from: 0.01, to: 0.001, in: 10, type: float32},{from: 0.001, to: 0.0001, in: 10, type: float32}]
+    batch_size: [20, 32, 100, 128]
+    embedding: [50, 100, 200]
+    dropout: [0.1, 0.2, 0.3, 0.5]
+    l2: [0.0001, 0.00001]
+  key: GCEGNN
+- class: FLCSP.FLCSP_cate.FLCSP_cate
+  params: { epoch: 30 }
+  params_opt:
+    lr: [{from: 0.01, to: 0.001, in: 10, type: float32},{from: 0.001, to: 0.0001, in: 10, type: float32}]
+    batch_size: [50]
+    embedding_size: [50, 100]
+    hidden_size: [100, 200]
+    dropout: [0.1,0.2,0.3]
+    l2: [0.00001, 0.00001]
+  key: FLCSP_cate
+- class: CM_HGCN.CM_HGCN.CM_HGCN
+  params: { epoch: 30 }
+  params_opt:
+    lr: [{from: 0.01, to: 0.001, in: 10, type: float32},{from: 0.001, to: 0.0001, in: 10, type: float32}]
+    batch_size: [20, 50, 100]
+    embedding: [20, 50, 100]
+    l2: [0.0001, 0.00001]
+  key: CM_HGCN
+- class: COTREC.COTREC.COTREC
+  params: { epoch: 30 }
+  params_opt:
+    lr: [{from: 0.01, to: 0.001, in: 10, type: float32},{from: 0.001, to: 0.0001, in: 10, type: float32}]
+    batch_size: [20, 50, 100]
+    embedding: [20, 50, 100]
+    l2: [0.0001, 0.00001]
+  key: COTREC

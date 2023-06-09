@@ -1,0 +1,39 @@
+type: opt # single|window, maybe add opt
+key: baselines_and_models #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple
+data:
+  name: diginetica #added in the end of the csv names
+  folder: data/diginetica/prepare/
+  prefix: diginetica
+  opts: {sessions_test: 100}
+results:
+  folder: results/
+
+metrics:
+- class: accuracy.HitRate
+  length: [5,10,15,20]
+- class: accuracy.MRR
+  length: [5,10,15,20]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+- class: time_memory_usage.Memory_usage
+
+optimize:
+  class: accuracy.MRR
+  length: [20]
+  iterations: 8  #optional
+algorithms:
+- class: knn.vstan_cat.VSKNN_STAN
+  params: {}
+  params_opt:
+    k: 624
+    sample_size: 884
+    lambda_spw: 0.104
+    lambda_snh: 50
+    lambda_inh: 1.5
+    item_pop: [2, 3, 7, 10, 15, 20, 30]
+  key: vstan

@@ -1,0 +1,56 @@
+type: single # single|window, maybe add opt
+key: BaselinesAndBenchMarkModels #added to the csv names
+evaluation: evaluation #evaluation|evaluation_last|evaluation_multiple|evaluation_user_based|evaluation_user_based_multiple
+data:
+  name: RSC15 #added in the end of the csv names
+  folder: data/RSC15/RSC64/
+  prefix: RSC15
+  opts: {sessions_test: 100} # sessions_test: "S" or "M" or "L"
+results:
+  folder: results/
+metrics:
+- class: accuracy.MRR
+  length: [3,5,10,15,20]
+- class: accuracy.CatD
+  length: [3,5,10,15,20]
+- class: accuracy.HitRate
+  length: [3,5,10,15,20]
+- class: accuracy_multiple.NDCG
+  length: [3,5,10,15,20]
+- class: coverage.Coverage
+  length: [20]
+- class: popularity.Popularity
+  length: [20]
+- class: saver.Saver
+  length: [50]
+- class: time_memory_usage.Time_usage_training
+- class: time_memory_usage.Time_usage_testing
+algorithms:
+- class: knn.vstan.VSKNN_STAN
+  params: { k: 1500 , sample_size: 1800, lambda_spw: 0.102 , lambda_snh: 51, lambda_inh: 1.5 }
+  key: stan
+- class: knn.stan.STAN
+  params: { k: 700 , sample_size: 2800, lambda_spw: 0.12 , lambda_snh: 400, lambda_inh: 0.58 }
+  key: stan
+- class: knn.vsknn.VMContextKNN
+  params: { k: 1500, sample_size: 10000, weighting: log , weighting_score: quadratic, idf_weighting: 20}
+  key: vsknn
+# GNN models
+- class: MGS.MGS.MGS
+  params: {epoch: 12, lr: 0.0045, batch_size: 128, l2: 0.0001, dropout: 0.3} 
+  key: MGS
+- class: CM_HGCN.CM_HGCN.CM_HGCN
+  params: {epoch: 15, lr: 0.0006, batch_size: 20, embedding: 50, l2: 0.00001}  
+  key: CM_HGCN
+- class: FLCSP.FLCSP_cate.FLCSP_cate      
+  params: {epoch: 10, lr: 0.001, batch_size: 100, embedding_size: 50, hidden_size: 100, dropout: 0.1, l2: 0.00001}
+  key: FLCSP_cate
+- class: GCEGNN.GCEGNN.GCEGNN
+  params: {epoch: 2, lr: 0.001, batch_size: 1, embedding: 50, l2: 0.0001}
+  key: GCEGNN
+- class: GNRRW.GNRRW.GNRRW
+  params: {epoch: 15, lr: 0.0012, batch_size: 128, hidden_size: 32, l2: 0.00001}
+  key: GNRRW
+- class: TAGNN.TAGNN.TAGNN
+  params: {epoch: 15, lr: 0.0007, batch_size: 128, embedding_size: 100, l2: 0.00001}
+  key: TAGNN
