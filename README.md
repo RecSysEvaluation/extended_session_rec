@@ -65,7 +65,7 @@
     <li>Move into "extended_session_rec" directory</li>
     <li>Run this command to create virtual environment: <strong>"conda create --name extended_session_rec python==3.8"</strong></li>
     <li>Run this command to activate virtual environment: <strong>"conda activate extended_session_rec"</strong></li>
-    <li>Run this command to install the required libraries: <strong>"pip install -r requirements_cpu.txt"</strong> if you have support of CUDA, then run this command to to install required libraries to run experiments on GPU: <strong>"pip install -r requirements_gpu.txt"</strong></li>
+    <li>Run this command to install the required libraries: <strong>"pip install -r requirements_cpu.txt"</strong> if you have support of CUDA, then run this command to install required libraries to run experiments on GPU: <strong>"pip install -r requirements_gpu.txt"</strong></li>
     <li>Finally run this command to reproduce the results: <strong>python run_config.py conf/in conf/out</strong></li>
   </ul>
   <p align="justify">In this study, we use DIGI, RSC15 and RETAIL datasets to evaluate the performance of recently published GNN models and their reproducability files and a optimization file to tune them are available in <b>"conf"</b> folder. So, if you want to reproduce results for any dataset, then conpy configuation file fron <b>"conf"</b> folder and past into <b>"in"</b> folder and again run this commmand <strong>"python run_config.py conf/in conf/out</strong>"</strong> to reproduce the results.</p>
