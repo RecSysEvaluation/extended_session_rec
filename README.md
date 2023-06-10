@@ -68,7 +68,7 @@
     <li>Run this command to install the required libraries: <strong>"pip install -r requirements_cpu.txt"</strong> if you have support of CUDA, then run this command to install required libraries to run experiments on GPU: <strong>"pip install -r requirements_gpu.txt"</strong></li>
     <li>Finally run this command to reproduce the results: <strong>python run_config.py conf/in conf/out</strong></li>
   </ul>
-  <p align="justify">In this study, we use DIGI, RSC15 and RETAIL datasets to evaluate the performance of recently published GNN models and their reproducability files and a optimization file to tune them are available in <b>"conf"</b> folder. So, if you want to reproduce results for any dataset, then conpy configuation file fron <b>"conf"</b> folder and past into <b>"in"</b> folder and again run this commmand <strong>"python run_config.py conf/in conf/out</strong>"</strong> to reproduce the results.</p>
+  <p align="justify">In this study, we use <a href="https://competitions.codalab.org/competitions/11161#learn_the_details-data2">DIGI</a>, <a href="https://www.kaggle.com/datasets/chadgostopp/recsys-challenge-2015">RSC15</a> and <a href="https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset">RETAIL</a> datasets to evaluate the performance of recently published GNN models and their reproducability files and a optimization file to tune them are available in <b>"conf"</b> folder. So, if you want to reproduce results for any dataset, then conpy configuation file fron <b>"conf"</b> folder and past into <b>"in"</b> folder and again run this commmand <strong>"python run_config.py conf/in conf/out</strong>"</strong> to reproduce the results.</p>
 </body>
 </html>  
 
