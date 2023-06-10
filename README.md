@@ -6,7 +6,7 @@
 <body>
 
 
-<h2>Extended SESSION-REC FRAMEWORK</h2>
+<h2>EXTENDED SESSION-REC FRAMEWORK</h2>
 
 <h3>Introduction</h3>
 <p align="justify">This reproducibility package was prepared for the paper titled "Performance Comparison of Session-based Recommendation Algorithms based on Graph Neural Networks" and submitted to the ACM CIKM '23 Conference. The results reported in this paper were achieved with the help of EXTENDED SESSION REC FRAMEWORK, which is built on SESSION REC FRAMEWORK. The SESSION REC FRAMEWORK is a Python-based framework for building and evaluating recommender systems (Python 3.5.x). It implements a suite of state-of-the-art algorithms and baselines for session-based and session-aware recommendation. More information about the SESSION REC FRAMEWORK can be <a href="https://rn5l.github.io/session-rec/index.html">found here.</a></p>
