@@ -49,7 +49,9 @@ session-aware recommendation. More information about the SESSION REC FRAMEWORK c
   <li>Tables </li>
   <li>Tqdm </li>
 </ul>
+  
 <h4>The EXTENDED SESSION REC FRAMEWORK can be operated by using two types of software. Below, we will discuss how to prepare the step-up to run the experiments</h4>
+  
 <h5>Using Docker</h5>
 <ul>
   <li>Download and install Docker from <a href="https://www.docker.com/">https://www.docker.com/</a></li>
@@ -61,7 +63,7 @@ session-aware recommendation. More information about the SESSION REC FRAMEWORK c
   <li>Run this command to reproduce the results: <strong>python run_config.py conf/in conf/out</strong></li>
 </ul>  
   
-<h4>Using Anaconda</h4>
+<h5>Using Anaconda</h5>
   <ul>
     <li>Download Anaconda from <a href="https://www.anaconda.com/">https://www.anaconda.com/</a> and install it</li>
     <li>Clone the GitHub repository by using this link: <strong>https://github.com/RecSysEvaluation/extended_session_rec.git</strong></li>
