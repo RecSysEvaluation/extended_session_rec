@@ -9,8 +9,11 @@
 <h2>EXTENDED SESSION-REC FRAMEWORK</h2>
 
 <h3>Introduction</h3>
-<p align="justify">This reproducibility package was prepared for the paper titled "Performance Comparison of Session-based Recommendation Algorithms based on Graph Neural Networks" and submitted to the ACM CIKM '23 Conference. The results reported in this paper were achieved with the help of EXTENDED SESSION REC FRAMEWORK, which is built on SESSION REC FRAMEWORK. The SESSION REC FRAMEWORK is a Python-based framework for building and evaluating recommender systems (Python 3.5.x). It implements a suite of state-of-the-art algorithms and baselines for session-based and session-aware recommendation. More information about the SESSION REC FRAMEWORK can be <a href="https://rn5l.github.io/session-rec/index.html">found here.</a></p>
-<h5>We have added following session-based algorithms to the SESSION REC FRAMEWORK and nameed as EXTENDED SESSION REC FRAMEWORK</h5>
+<p align="justify">This reproducibility package was prepared for the paper titled "Performance Comparison of Session-based Recommendation Algorithms based on Graph Neural Networks" and submitted to the ACM CIKM '23 Conference. 
+The results reported in this paper were achieved with the help of the EXTENDED SESSION REC FRAMEWORK, which is built on SESSION REC FRAMEWORK. The SESSION REC FRAMEWORK is a 
+Python-based framework for building and evaluating recommender systems. It implements a suite of state-of-the-art algorithms and baselines for session-based and 
+session-aware recommendation. More information about the SESSION REC FRAMEWORK can be <a href="https://rn5l.github.io/session-rec/index.html">found here.</a></p>
+<h5>The following session-based algorithms have been addded to the SESSION REC FRAMEWORK and nameed as EXTENDED SESSION REC FRAMEWORK</h5>
 <ul>
   <li>GCE-GNN: Global Context Enhanced Graph Neural Networks for Session-based Recommendation [SIGIR'20]</li>
   <li>TAGNN: Target Attentive Graph Neural Networks for Session-based Recommendation [SIGIR'20]</li>
@@ -50,11 +53,12 @@
 <h4>Using Docker</h4>
 <ul>
   <li>Download and install Docker from <a href="https://www.docker.com/">https://www.docker.com/</a></li>
-  <li>Run the following command to pull Docker Image from Docker Hub: <strong>docker pull shefai/extended_session_rec</strong>. If you have support of CUDA then use this command  <strong>--gpus all flag</strong> to attach CUDA with container. More information about how to attach CUDA with docker container can be found <a href="https://docs.docker.com/compose/gpu-support/">here</a> </li> 
+  <li>Run the following command to pull Docker Image from Docker Hub: <strong>docker pull shefai/extended_session_rec</strong>. If you have support of CUDA then use this command  <strong>--gpus all flag</strong> to attach CUDA with 
+      the Docker container. More information about how to attach CUDA with the Docker container can be found <a href="https://docs.docker.com/compose/gpu-support/">here</a> </li> 
   <li>Clone the GitHub repository by using this link: <strong>https://github.com/RecSysEvaluation/extended_session_rec.git</strong>
-  <li>Create the Docker container using pulled Docker Image</li>
-  <li>Move into <b>extended_session_rec</b> directory</li>
-  <li>Run this command to reproduce the experiments: <strong>python run_config.py conf/in conf/out</strong></li>
+  <li>Create the Docker container by pulling the Docker Image</li>
+  <li>Move into the <b>extended_session_rec</b> directory</li>
+  <li>Run this command to reproduce the results: <strong>python run_config.py conf/in conf/out</strong></li>
 </ul>  
   
 <h4>Using Anaconda</h4>
@@ -62,13 +66,17 @@
     <li>Download Anaconda from <a href="https://www.anaconda.com/">https://www.anaconda.com/</a> and install it</li>
     <li>Clone the GitHub repository by using this link: <strong>https://github.com/RecSysEvaluation/extended_session_rec.git</strong></li>
     <li>Open the Anaconda command prompt</li>
-    <li>Move into "extended_session_rec" directory</li>
-    <li>Run this command to create virtual environment: <strong>"conda create --name extended_session_rec python==3.8"</strong></li>
-    <li>Run this command to activate virtual environment: <strong>"conda activate extended_session_rec"</strong></li>
-    <li>Run this command to install the required libraries: <strong>"pip install -r requirements_cpu.txt"</strong> if you have support of CUDA, then run this command to install required libraries to run experiments on GPU: <strong>"pip install -r requirements_gpu.txt"</strong></li>
+    <li>Move into the <strong>extended_session_rec</strong> directory</li>
+    <li>Run this command to create virtual environment: <strong>conda create --name extended_session_rec python==3.8</strong></li>
+    <li>Run this command to activate the virtual environment: <strong>conda activate extended_session_rec</strong></li>
+    <li>Run this command to install the required libraries: <strong>pip install -r requirements_cpu.txt</strong> if you have support of CUDA, 
+        then run this command to install the required libraries to run the experiments on GPU: <strong>pip install -r requirements_gpu.txt"</strong></li>
     <li>Finally run this command to reproduce the results: <strong>python run_config.py conf/in conf/out</strong></li>
   </ul>
-  <p align="justify">In this study, we use <a href="https://competitions.codalab.org/competitions/11161#learn_the_details-data2">DIGI</a>, <a href="https://www.kaggle.com/datasets/chadgostopp/recsys-challenge-2015">RSC15</a> and <a href="https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset">RETAIL</a> datasets to evaluate the performance of recently published GNN models and their reproducability files and a optimization file to tune them are available in <b>"conf"</b> folder. So, if you want to reproduce results for any dataset, then conpy configuation file fron <b>"conf"</b> folder and past into <b>"in"</b> folder and again run this commmand <strong>"python run_config.py conf/in conf/out</strong>"</strong> to reproduce the results.</p>
+  <p align="justify">In this study, we use the <a href="https://competitions.codalab.org/competitions/11161#learn_the_details-data2">DIGI</a>, <a href="https://www.kaggle.com/datasets/chadgostopp/recsys-challenge-2015">RSC15</a> 
+     and <a href="https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset">RETAIL</a> datasets to evaluate the performance of recently published GNN models and their reproducibility files and a optimization 
+     file to tune them are available in the <b>conf folder</b>. So, if you want to reproduce the results for each dataset, then copy the configuation file from the <b>conf folder</b> and past into  the <b>in folder</b> and 
+     again run this command <strong>python run_config.py conf/in conf/out</strong></strong> to reproduce the results.</p>
 </body>
 </html>  
 
