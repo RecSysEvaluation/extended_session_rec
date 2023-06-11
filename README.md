@@ -49,8 +49,8 @@ session-aware recommendation. More information about the SESSION REC FRAMEWORK c
   <li>Tables </li>
   <li>Tqdm </li>
 </ul>
-
-<h4>Using Docker</h4>
+<h4>The EXTENDED SESSION REC FRAMEWORK can be operated by using two types of software. Below, we will discuss how to prepare the step-up to run the experiments</h4>
+<h5>Using Docker</h5>
 <ul>
   <li>Download and install Docker from <a href="https://www.docker.com/">https://www.docker.com/</a></li>
   <li>Run the following command to pull Docker Image from Docker Hub: <strong>docker pull shefai/extended_session_rec</strong>. If you have support of CUDA then use this command  <strong>--gpus all flag</strong> to attach CUDA with 
