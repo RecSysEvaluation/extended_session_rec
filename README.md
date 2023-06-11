@@ -24,7 +24,7 @@ session-aware recommendation. More information about the SESSION REC FRAMEWORK c
   <li>SGINM: Learning Sequential and General Interests via A Joint Neural Model for Session-based Recommendation [Knowledge-based systems (IF-8.038) Elsevier'22]</li> 
   <li>CMHGNN: Category-aware Multi-relation Heterogeneous Graph Neural Networks for Session-based Recommendation [Neurocomputing (IF-5.719) Elsevier'20]</li>
 </ul>
-<h4>Required libraries to run the framework</h4>
+<h5>Required libraries to run the framework</h5>
 <ul>
   <li>Anaconda 4.X (Python 3.5 or plus)</li>
   <li>BLAS</li>
