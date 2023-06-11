@@ -13,7 +13,7 @@
 The results reported in this paper were achieved with the help of the EXTENDED SESSION REC FRAMEWORK, which is built on SESSION REC FRAMEWORK. The SESSION REC FRAMEWORK is a 
 Python-based framework for building and evaluating recommender systems. It implements a suite of state-of-the-art algorithms and baselines for session-based and 
 session-aware recommendation. More information about the SESSION REC FRAMEWORK can be <a href="https://rn5l.github.io/session-rec/index.html">found here.</a></p>
-<h5>The following session-based algorithms have been addded to the SESSION REC FRAMEWORK and nameed as EXTENDED SESSION REC FRAMEWORK</h5>
+<h5>The following session-based algorithms have been addded to the SESSION REC FRAMEWORK and named as EXTENDED SESSION REC FRAMEWORK</h5>
 <ul>
   <li>GCE-GNN: Global Context Enhanced Graph Neural Networks for Session-based Recommendation [SIGIR'20]</li>
   <li>TAGNN: Target Attentive Graph Neural Networks for Session-based Recommendation [SIGIR'20]</li>
