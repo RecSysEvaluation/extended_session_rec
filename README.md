@@ -66,13 +66,13 @@ session-aware recommendation. More information about the SESSION REC FRAMEWORK c
 <h5>Using Anaconda</h5>
   <ul>
     <li>Download Anaconda from <a href="https://www.anaconda.com/">https://www.anaconda.com/</a> and install it</li>
-    <li>Clone the GitHub repository by using this link: <strong>https://github.com/RecSysEvaluation/extended_session_rec.git</strong></li>
+    <li>Clone the GitHub repository by using this link: <code>https://github.com/RecSysEvaluation/extended_session_rec.git</code></li>
     <li>Open the Anaconda command prompt</li>
-    <li>Move into the <strong>extended_session_rec</strong> directory</li>
-    <li>Run this command to create virtual environment: <strong>conda create --name extended_session_rec python==3.8</strong></li>
-    <li>Run this command to activate the virtual environment: <strong>conda activate extended_session_rec</strong></li>
-    <li>Run this command to install the required libraries: <strong>pip install -r requirements_cpu.txt</strong> if you have support of CUDA, 
-        then run this command to install the required libraries to run the experiments on GPU: <strong>pip install -r requirements_gpu.txt"</strong></li>
+    <li>Move into the <code>extended_session_rec</code> directory</li>
+    <li>Run this command to create virtual environment: <code>conda create --name extended_session_rec python==3.8</code></li>
+    <li>Run this command to activate the virtual environment: <code>conda activate extended_session_rec</code></li>
+    <li>Run this command to install the required libraries: <code>pip install -r requirements_cpu.txt</code> if you have support of CUDA, 
+        then run this command to install the required libraries to run the experiments on GPU: <code>pip install -r requirements_gpu.txt"</code></li>
     <li>Finally run this command to reproduce the results: <strong>python run_config.py conf/in conf/out</strong></li>
   </ul>
   <p align="justify">In this study, we use the <a href="https://competitions.codalab.org/competitions/11161#learn_the_details-data2">DIGI</a>, <a href="https://www.kaggle.com/datasets/chadgostopp/recsys-challenge-2015">RSC15</a> 
