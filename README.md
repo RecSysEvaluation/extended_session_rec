@@ -49,8 +49,8 @@ session-aware recommendation. More information about the SESSION REC FRAMEWORK c
   <li>Tables </li>
   <li>Tqdm </li>
 </ul>
-  
-<h4>The EXTENDED SESSION REC FRAMEWORK can be implemented by using the following type of software and below discussion is provided on how to set up the virtual environment to run the experiments</h4>
+<h2>Installation guide</h2>  
+<p>The EXTENDED SESSION REC FRAMEWORK can be implemented by using the following type of software and below discussion is provided on how to set up the virtual environment to run the experiments</p>
   
 <h5>Using Docker</h5>
 <ul>
