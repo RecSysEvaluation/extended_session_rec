@@ -60,7 +60,7 @@ session-aware recommendation. More information about the SESSION REC FRAMEWORK c
   <li>Clone the GitHub repository by using this link: <strong>https://github.com/RecSysEvaluation/extended_session_rec.git</strong>
   <li>Create the Docker container by pulling the Docker Image</li>
   <li>Move into the <b>extended_session_rec</b> directory</li>
-  <li>Run this command to reproduce the results: <strong>python run_config.py conf/in conf/out</strong></li>
+  <li>Run this command to reproduce the results: <code>python run_config.py conf/in conf/out</code></li>
 </ul>  
   
 <h5>Using Anaconda</h5>
