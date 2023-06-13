@@ -55,9 +55,9 @@ session-aware recommendation. More information about the SESSION REC FRAMEWORK c
 <h5>Using Docker</h5>
 <ul>
   <li>Download and install Docker from <a href="https://www.docker.com/">https://www.docker.com/</a></li>
-  <li>Run the following command to pull Docker Image from Docker Hub: <strong>docker pull shefai/extended_session_rec</strong>. If you have support of CUDA then use this command  <strong>--gpus all flag</strong> to attach CUDA with 
+  <li>Run the following command to pull Docker Image from Docker Hub: <code>docker pull shefai/extended_session_rec</code>. If you have support of CUDA then use this command  <code>--gpus all flag</code> to attach CUDA with 
       the Docker container. More information about how to attach CUDA with the Docker container can be found <a href="https://docs.docker.com/compose/gpu-support/">here</a> </li> 
-  <li>Clone the GitHub repository by using this link: <strong>https://github.com/RecSysEvaluation/extended_session_rec.git</strong>
+  <li>Clone the GitHub repository by using this link: <code>https://github.com/RecSysEvaluation/extended_session_rec.git</code>
   <li>Create the Docker container by pulling the Docker Image</li>
   <li>Move into the <b>extended_session_rec</b> directory</li>
   <li>Run this command to reproduce the results: <code>python run_config.py conf/in conf/out</code></li>
