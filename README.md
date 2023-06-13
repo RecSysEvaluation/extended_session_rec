@@ -68,7 +68,7 @@ session-aware recommendation. More information about the SESSION REC FRAMEWORK c
     <li>Download Anaconda from <a href="https://www.anaconda.com/">https://www.anaconda.com/</a> and install it</li>
     <li>Clone the GitHub repository by using this link: <code>https://github.com/RecSysEvaluation/extended_session_rec.git</code></li>
     <li>Open the Anaconda command prompt</li>
-    <li>Move into the <code>extended_session_rec</code> directory</li>
+    <li>Move into the <b>extended_session_rec</b> directory</li>
     <li>Run this command to create virtual environment: <code>conda create --name extended_session_rec python==3.8</code></li>
     <li>Run this command to activate the virtual environment: <code>conda activate extended_session_rec</code></li>
     <li>Run this command to install the required libraries: <code>pip install -r requirements_cpu.txt</code> if you have support of CUDA, 
