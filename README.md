@@ -73,12 +73,12 @@ session-aware recommendation. More information about the SESSION REC FRAMEWORK c
     <li>Run this command to activate the virtual environment: <code>conda activate extended_session_rec</code></li>
     <li>Run this command to install the required libraries: <code>pip install -r requirements_cpu.txt</code> if you have support of CUDA, 
         then run this command to install the required libraries to run the experiments on GPU: <code>pip install -r requirements_gpu.txt"</code></li>
-    <li>Finally run this command to reproduce the results: <strong>python run_config.py conf/in conf/out</strong></li>
+    <li>Finally run this command to reproduce the results: <code>python run_config.py conf/in conf/out</code></li>
   </ul>
   <p align="justify">In this study, we use the <a href="https://competitions.codalab.org/competitions/11161#learn_the_details-data2">DIGI</a>, <a href="https://www.kaggle.com/datasets/chadgostopp/recsys-challenge-2015">RSC15</a> 
      and <a href="https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset">RETAIL</a> datasets to evaluate the performance of recently published GNN models and their reproducibility files and a optimization 
      file to tune them are available in the <b>conf folder</b>. So, if you want to reproduce the results for each dataset, then copy the configuation file from the <b>conf folder</b> and past into  the <b>in folder</b> and 
-     again run this command <strong>python run_config.py conf/in conf/out</strong></strong> to reproduce the results.</p>
+     again run this command <code>python run_config.py conf/in conf/out</code></strong> to reproduce the results.</p>
 </body>
 </html>  
 
