@@ -120,7 +120,7 @@ class STAN:
         if self.sample_size == 0: #use all session as possible neighbors
             print('!!!!! runnig KNN without a sample size (check config)')
         
-    def predict_next( self, session_id, input_item_id, predict_for_item_ids, input_user_id=None, timestamp=0, skip=False, type='view'):
+    def predict_next( self, session_id, input_item_id, predict_for_item_ids, timestamp=0, skip=False, type='view'):
         '''
         Gives predicton scores for a selected set of items on how likely they be the next item in the session.
                 
