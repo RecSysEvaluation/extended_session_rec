@@ -15,14 +15,14 @@ Python-based framework for building and evaluating recommender systems. It imple
 session-aware recommendation. More information about the SESSION REC FRAMEWORK can be <a href="https://rn5l.github.io/session-rec/index.html">found here.</a></p>
 <h5>The following session-based algorithms have been addded to the SESSION REC FRAMEWORK and named as EXTENDED SESSION REC FRAMEWORK</h5>
 <ul>
-  <li>GCE-GNN: Global Context Enhanced Graph Neural Networks for Session-based Recommendation [SIGIR'20]<a href="https://www.docker.com/">(Original Code)</a></li>
-  <li>TAGNN: Target Attentive Graph Neural Networks for Session-based Recommendation [SIGIR'20] <a href="https://www.docker.com/">(Original Code)</a></li>
-  <li>MGS: An Attribute-Driven Mirror Graph Network for Session-based Recommendation [SIGIR'22] <a href="https://www.docker.com/">(Original Code)</a></li>
-  <li>GNRRW: Graph Neighborhood Routing and Random Walk for Session-based Recommendation [ICDM'21] <a href="https://www.docker.com/">(Original Code)</a></li>
-  <li>COTREC: Self-Supervised Graph Co-Training for Session-based Recommendation [CIKM'21] <a href="https://www.docker.com/">(Original Code)</a></li>
-  <li>FLCSP: Fusion of Latent Categorical Prediction and Sequential Prediction for Session-based Recommendation [Information Sciences (IF-5.524) Elsevier'21] <a href="https://www.docker.com/">(Original Code)</a></li>
-  <li>SGINM: Learning Sequential and General Interests via A Joint Neural Model for Session-based Recommendation [Knowledge-based systems (IF-8.038) Elsevier'22] <a href="https://www.docker.com/">(Original Code)</a></li> 
-  <li>CMHGNN: Category-aware Multi-relation Heterogeneous Graph Neural Networks for Session-based Recommendation [Neurocomputing (IF-5.719) Elsevier'20] <a href="https://www.docker.com/">(Original Code)</a></li>
+  <li>GCE-GNN: Global Context Enhanced Graph Neural Networks for Session-based Recommendation [SIGIR'20]<a href="https://github.com/CCIIPLab/GCE-GNN">(Original Code)</a></li>
+  <li>TAGNN: Target Attentive Graph Neural Networks for Session-based Recommendation [SIGIR'20] <a href="https://recsysevaluation.github.io/extended-session-rec/">(Original Code)</a></li>
+  <li>MGS: An Attribute-Driven Mirror Graph Network for Session-based Recommendation [SIGIR'22] <a href="https://github.com/WHUIR/MGS">(Original Code)</a></li>
+  <li>GNRRW: Graph Neighborhood Routing and Random Walk for Session-based Recommendation [ICDM'21] <a href="[https://www.docker.com/](https://github.com/resistzzz/GNRRW)">(Original Code)</a></li>
+  <li>COTREC: Self-Supervised Graph Co-Training for Session-based Recommendation [CIKM'21] <a href="https://github.com/xiaxin1998/COTREC">(Original Code)</a></li>
+  <li>FLCSP: Fusion of Latent Categorical Prediction and Sequential Prediction for Session-based Recommendation [Information Sciences (IF-5.524) Elsevier'21] <a href="https://github.com/RecSysEvaluation/extended-session-rec/tree/master/algorithms/FLCSP">(Original Code)</a></li>
+  <li>SGINM: Learning Sequential and General Interests via A Joint Neural Model for Session-based Recommendation [Knowledge-based systems (IF-8.038) Elsevier'22] <a href="https://github.com/RecSysEvaluation/extended-session-rec/tree/master/algorithms/SGINM">(Original Code)</a></li> 
+  <li>CMHGNN: Category-aware Multi-relation Heterogeneous Graph Neural Networks for Session-based Recommendation [Neurocomputing (IF-5.719) Elsevier'20] <a href="https://github.com/RecSysEvaluation/extended-session-rec/tree/master/algorithms/CM_HGCN">(Original Code)</a></li>
 </ul>
 <h5>Required libraries to run the framework</h5>
 <ul>
