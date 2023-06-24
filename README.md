@@ -48,6 +48,7 @@ session-aware recommendation. More information about the SESSION REC FRAMEWORK c
   <li>Torch</li>
   <li>Tables </li>
   <li>Tqdm </li>
+  <li>Numba </li>
 </ul>
 <h2>Installation guide</h2>  
 <p>The EXTENDED SESSION REC FRAMEWORK can be implemented by using the following type of software and below discussion is provided on how to set up the virtual environment to run the experiments</p>
