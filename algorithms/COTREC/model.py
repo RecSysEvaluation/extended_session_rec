@@ -12,6 +12,19 @@ import random
 from numba import jit
 
 
+import warnings
+warnings.filterwarnings('ignore')
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+def init_seed(seed):
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+
+init_seed(2000)
 
 class ItemConv(Module):
     def __init__(self, layers, emb_size):
@@ -20,21 +33,21 @@ class ItemConv(Module):
         self.layers = layers
         self.w_item = {}
         for i in range(self.layers):
-            self.w_item['weight_item%d' % (i)] = nn.Linear(self.emb_size, self.emb_size, bias=False)
-
+            self.w_item['weight_item%d' % (i)] = nn.Linear(self.emb_size, self.emb_size, bias=False).to(device)
     def forward(self, adjacency, embedding):
-        values = adjacency.data
-        indices = np.vstack((adjacency.row, adjacency.col))
-        i = torch.LongTensor(indices)
-        v = torch.FloatTensor(values)
-        shape = adjacency.shape
-        adjacency = torch.sparse.FloatTensor(i, v, torch.Size(shape))
+        # values = adjacency.data
+        # indices = np.vstack((adjacency.row, adjacency.col))
+        # i = torch.LongTensor(indices)
+        # v = torch.FloatTensor(values)
+        # shape = adjacency.shape
+        # adjacency = torch.sparse.FloatTensor(i, v, torch.Size(shape))
         item_embeddings = embedding
         item_embedding_layer0 = item_embeddings
         final = [item_embedding_layer0]
         for i in range(self.layers):
             item_embeddings = self.w_item['weight_item%d' % (i)](item_embeddings)
-            item_embeddings = torch.sparse.mm(adjacency, item_embeddings)
+            
+            item_embeddings = torch.sparse.mm(adjacency.to(device), item_embeddings)
             final.append(F.normalize(item_embeddings, dim=-1, p=2))
         
         #final = [t.detach().numpy() for t in final]
@@ -50,23 +63,27 @@ class SessConv(Module):
         self.layers = layers
         self.w_sess = {}
         for i in range(self.layers):
-            self.w_sess['weight_sess%d' % (i)] = nn.Linear(self.emb_size, self.emb_size, bias=False)
+            self.w_sess['weight_sess%d' % (i)] = nn.Linear(self.emb_size, self.emb_size, bias=False).to(device)
 
     def forward(self, item_embedding, D, A, session_item, session_len):
         zeros = torch.FloatTensor(1, self.emb_size).fill_(0)
+        
+        zeros = zeros.to(device)
         # zeros = torch.zeros([1,self.emb_size])
         item_embedding = torch.cat([zeros, item_embedding], 0)
         seq_h = []
         for i in torch.arange(len(session_item)):
-            seq_h.append(torch.index_select(item_embedding, 0, session_item[i]))
+            seq_h.append(torch.index_select(item_embedding, 0, session_item[i.to(device)]))
+            
         seq_h1 = torch.tensor([item.cpu().detach().numpy() for item in seq_h])
-        session_emb = torch.div(torch.sum(seq_h1, 1), session_len)
+        session_emb = torch.div(torch.sum(seq_h1.to(device), 1), session_len)
         session = [session_emb]
         DA = torch.mm(D, A).float()
         for i in range(self.layers):
             session_emb = self.w_sess['weight_sess%d' % (i)](session_emb)
             session_emb = torch.mm(DA, session_emb)
             session.append(F.normalize(session_emb, p=2, dim=-1))
+            
         sess = torch.tensor([item.cpu().detach().numpy() for item in session])
         session_emb = torch.sum(sess, 0)/(self.layers+1)
         
@@ -74,7 +91,7 @@ class SessConv(Module):
 
 
 class COTREC(Module):
-    def __init__(self, adjacency, n_node, lr, layers, l2, beta, lam, eps, emb_size):
+    def __init__(self, adjacency, n_node, lr, layers, l2, beta, lam, eps, emb_size, device):
         super(COTREC, self).__init__()
         self.emb_size = emb_size
         self.batch_size = emb_size
@@ -87,13 +104,19 @@ class COTREC(Module):
         self.eps = eps
         self.K = 10
         self.w_k = 10
-        self.num = 5000
+        self.num = n_node
+        
+        self.device = device
+        
         self.adjacency = adjacency
         self.embedding = nn.Embedding(self.n_node, self.emb_size)
         self.pos_len = 200
         
         self.pos_embedding = nn.Embedding(self.pos_len, self.emb_size)
         self.ItemGraph = ItemConv(self.layers, self.emb_size)
+        
+        
+        
         self.w_1 = nn.Parameter(torch.Tensor(2 * self.emb_size, self.emb_size))
         self.w_2 = nn.Parameter(torch.Tensor(self.emb_size, 1))
         self.w_i = nn.Linear(self.emb_size, self.emb_size)
@@ -116,26 +139,30 @@ class COTREC(Module):
 
     def generate_sess_emb(self, item_embedding, session_item, session_len, reversed_sess_item, mask):
         zeros = torch.FloatTensor(1, self.emb_size).fill_(0)
+        zeros = zeros.to(device)
         # zeros = torch.zeros(1, self.emb_size)
         item_embedding = torch.cat([zeros, item_embedding], 0)
         get = lambda i: item_embedding[reversed_sess_item[i]]
         seq_h = torch.FloatTensor(session_len.shape[0], list(reversed_sess_item.shape)[1], self.emb_size).fill_(0)
         # seq_h = torch.zeros(self.batch_size, list(reversed_sess_item.shape)[1], self.emb_size)
+        
         for i in torch.arange(session_item.shape[0]):
-            seq_h[i] = get(i)
-        hs = torch.div(torch.sum(seq_h, 1), session_len)
+            seq_h[i] = get(i.to(device))
+        
+            
+        hs = torch.div(torch.sum(seq_h.to(device), 1), session_len)
         mask = mask.float().unsqueeze(-1)
         len = seq_h.shape[1]
         pos_emb = self.pos_embedding.weight[:len]
         pos_emb = pos_emb.unsqueeze(0).repeat(session_len.shape[0], 1, 1)
 
         hs = hs.unsqueeze(-2).repeat(1, len, 1)
-        nh = torch.matmul(torch.cat([pos_emb, seq_h], -1), self.w_1)
+        nh = torch.matmul(torch.cat([pos_emb, seq_h.to(device)], -1), self.w_1)
         nh = torch.tanh(nh)
         nh = torch.sigmoid(self.glu1(nh) + self.glu2(hs))
         beta = torch.matmul(nh, self.w_2)
         beta = beta * mask
-        select = torch.sum(beta * seq_h, 1)
+        select = torch.sum(beta * seq_h.to(device), 1)
         return select
 
     def generate_sess_emb_npos(self, item_embedding, session_item, session_len, reversed_sess_item, mask):
@@ -164,7 +191,8 @@ class COTREC(Module):
         return pos
 
     def adversarial_item(self, item_emb, tar,sess_emb):
-        adv_item_emb = item_emb + self.adv_item
+        
+        adv_item_emb = item_emb.to(device) + self.adv_item.to(device)
         score = torch.mm(sess_emb, torch.transpose(adv_item_emb, 1, 0))
         
         #rand_tensor = torch.ones((1, score.shape[0]))
@@ -177,7 +205,7 @@ class COTREC(Module):
         self.adv_item = (F.normalize(adv, p=2,dim=1) * self.eps).requires_grad_(True)
 
     def adversarial_sess(self, item_emb, tar,sess_emb):
-        adv_item_emb = item_emb + self.adv_sess
+        adv_item_emb = item_emb.to(device) + self.adv_sess.to(device)
         score = torch.mm(sess_emb, torch.transpose(adv_item_emb, 1, 0))
         
         #rand_tensor = torch.ones((1, score.shape[0]))
@@ -209,8 +237,8 @@ class COTREC(Module):
             return torch.sum(torch.mul(x1, x2), 2)
 
         anchor = F.normalize(anchor + sess_emb, p=2, dim=-1)
-        pos = torch.reshape(pos, (self.batch_size, self.K, self.emb_size)) + sess_emb.unsqueeze(1).repeat(1, self.K, 1)
-        neg = torch.reshape(neg, (self.batch_size, self.K, self.emb_size)) + sess_emb.unsqueeze(1).repeat(1, self.K, 1)
+        pos = torch.reshape(pos.to(device), (self.batch_size, self.K, self.emb_size)) + sess_emb.unsqueeze(1).repeat(1, self.K, 1)
+        neg = torch.reshape(neg.to(device), (self.batch_size, self.K, self.emb_size)) + sess_emb.unsqueeze(1).repeat(1, self.K, 1)
         pos_score = score(anchor.unsqueeze(1).repeat(1, self.K, 1), F.normalize(pos, p=2, dim=-1))
         neg_score = score(anchor.unsqueeze(1).repeat(1, self.K, 1), F.normalize(neg, p=2, dim=-1))
         pos_score = torch.sum(torch.exp(pos_score / 0.2), 1)
@@ -219,8 +247,10 @@ class COTREC(Module):
         return con_loss
 
     def topk_func_random(self, score1, score2, item_emb_I, item_emb_S):
+        
         values, pos_ind_I = score1.topk(self.num, dim=0, largest=True, sorted=True)
         values, pos_ind_S = score2.topk(self.num, dim=0, largest=True, sorted=True)
+        
         pos_emb_I = torch.FloatTensor(self.K, self.batch_size, self.emb_size).fill_(0)
         pos_emb_S = torch.FloatTensor(self.K, self.batch_size, self.emb_size).fill_(0)
         neg_emb_I = torch.FloatTensor(self.K, self.batch_size, self.emb_size).fill_(0)
@@ -237,10 +267,23 @@ class COTREC(Module):
     def forward(self, session_item, session_len, D, A, reversed_sess_item, mask, tar, diff_mask):
         self.SessGraph = SessConv(self.layers, session_len.shape[0], self.emb_size)
         self.batch_size = session_len.shape[0]
-        item_embeddings_i = self.ItemGraph(self.adjacency, self.embedding.weight)
+        
+        
+        values = self.adjacency.data
+        indices = np.vstack((self.adjacency.row, self.adjacency.col))
+        i = torch.LongTensor(indices)
+        v = torch.FloatTensor(values)
+        shape = self.adjacency.shape
+        adjacency = torch.sparse.FloatTensor(i, v, torch.Size(shape))
+        
+        
+        item_embeddings_i = self.ItemGraph(adjacency, self.embedding.weight)
         
         sess_emb_i = self.generate_sess_emb(item_embeddings_i, session_item, session_len, reversed_sess_item, mask)
+        
         sess_emb_i = self.w_k * F.normalize(sess_emb_i, dim=-1, p=2)
+        
+        
         item_embeddings_i = F.normalize(item_embeddings_i, dim=-1, p=2)
         scores_item = torch.mm(sess_emb_i, torch.transpose(item_embeddings_i, 1, 0))
         
@@ -250,6 +293,8 @@ class COTREC(Module):
         loss_item = self.loss_function(scores_item, tar)
 
         sess_emb_s = self.SessGraph(self.embedding.weight, D, A, session_item, session_len)
+        
+        sess_emb_s = sess_emb_s.to(device)
         scores_sess = torch.mm(sess_emb_s, torch.transpose(item_embeddings_i, 1, 0))
         # compute probability of items to be positive examples
         pos_prob_I = self.example_predicting(item_embeddings_i, torch.transpose(sess_emb_i, 0, 1))
@@ -269,85 +314,13 @@ class COTREC(Module):
         self.adversarial_item(item_embeddings_i, tar, sess_emb_i)
         self.adversarial_sess(item_embeddings_i, tar, sess_emb_s)
 
-        adv_emb_item = item_embeddings_i + self.adv_item
-        adv_emb_sess = item_embeddings_i + self.adv_sess
+        adv_emb_item = item_embeddings_i.to(device) + self.adv_item.to(device)
+        adv_emb_sess = item_embeddings_i + self.adv_sess.to(device)
 
         score_adv1 = torch.mm(sess_emb_s, torch.transpose(adv_emb_item, 1, 0))
         score_adv2 = torch.mm(sess_emb_i, torch.transpose(adv_emb_sess, 1, 0))
         # add difference constraint
         loss_diff = self.diff(scores_item, scores_sess, score_adv2, score_adv1, diff_mask)
         return self.beta * con_loss, loss_item, scores_item, loss_diff*self.lam
-
-
-# @jit(nopython=True)
-# def find_k_largest(K, candidates):
-#     n_candidates = []
-#     for iid,score in enumerate(candidates[:K]):
-#         n_candidates.append((iid, score))
-#     n_candidates.sort(key=lambda d: d[1], reverse=True)
-#     k_largest_scores = [item[1] for item in n_candidates]
-#     ids = [item[0] for item in n_candidates]
-#     # find the N biggest scores
-#     for iid,score in enumerate(candidates):
-#         ind = K
-#         l = 0
-#         r = K - 1
-#         if k_largest_scores[r] < score:
-#             while r >= l:
-#                 mid = int((r - l) / 2) + l
-#                 if k_largest_scores[mid] >= score:
-#                     l = mid + 1
-#                 elif k_largest_scores[mid] < score:
-#                     r = mid - 1
-#                 if r < l:
-#                     ind = r
-#                     break
-#         # move the items backwards
-#         if ind < K - 2:
-#             k_largest_scores[ind + 2:] = k_largest_scores[ind + 1:-1]
-#             ids[ind + 2:] = ids[ind + 1:-1]
-#         if ind < K - 1:
-#             k_largest_scores[ind + 1] = score
-#             ids[ind + 1] = iid
-#     return ids#,k_largest_scores
-
-
-# def train_test(model, train_data, test_data, epoch):
-#     print('start training: ', datetime.datetime.now())
-#     total_loss = 0.0
-#     slices = train_data.generate_batch(model.batch_size)
-#     for i in slices:
-#         model.zero_grad()
-#         tar, scores_item, con_loss, loss_item, loss_diff = forward(model, i, train_data, epoch, train=True)
-#         loss = loss_item + con_loss + loss_diff
-#         loss.backward()
-#         model.optimizer.step()
-#         total_loss += loss.item()
-#     print('\tLoss:\t%.3f' % total_loss)
-#     top_K = [5, 10, 20]
-#     metrics = {}
-#     for K in top_K:
-#         metrics['hit%d' % K] = []
-#         metrics['mrr%d' % K] = []
-#     print('start predicting: ', datetime.datetime.now())
-
-#     model.eval()
-#     slices = test_data.generate_batch(model.batch_size)
-#     for i in slices:
-#         tar,scores_item, con_loss, loss_item, loss_diff = forward(model, i, test_data, epoch, train=False)
-#         scores = trans_to_cpu(scores_item).detach().numpy()
-#         index = []
-#         for idd in range(model.batch_size):
-#             index.append(find_k_largest(20, scores[idd]))
-#         index = np.array(index)
-#         tar = trans_to_cpu(tar).detach().numpy()
-#         for K in top_K:
-#             for prediction, target in zip(index[:, :K], tar):
-#                 metrics['hit%d' % K].append(np.isin(target, prediction))
-#                 if len(np.where(prediction == target)[0]) == 0:
-#                     metrics['mrr%d' % K].append(0)
-#                 else:
-#                     metrics['mrr%d' % K].append(1 / (np.where(prediction == target)[0][0] + 1))
-#     return metrics, total_loss
 
 
