@@ -16,7 +16,7 @@ session-aware recommendation. More information about the SESSION REC FRAMEWORK c
 <h5>The following session-based algorithms have been addded to the SESSION REC FRAMEWORK and named as EXTENDED SESSION REC FRAMEWORK</h5>
 <ul>
   <li>GCE-GNN: Global Context Enhanced Graph Neural Networks for Session-based Recommendation [SIGIR'20]<a href="https://github.com/CCIIPLab/GCE-GNN">(Original Code)</a></li>
-  <li>TAGNN: Target Attentive Graph Neural Networks for Session-based Recommendation [SIGIR'20] <a href="https://recsysevaluation.github.io/extended-session-rec/">(Original Code)</a></li>
+  <li>TAGNN: Target Attentive Graph Neural Networks for Session-based Recommendation [SIGIR'20] <a href="https://github.com/CRIPAC-DIG/TAGNN">(Original Code)</a></li>
   <li>MGS: An Attribute-Driven Mirror Graph Network for Session-based Recommendation [SIGIR'22] <a href="https://github.com/WHUIR/MGS">(Original Code)</a></li>
   <li>GNRRW: Graph Neighborhood Routing and Random Walk for Session-based Recommendation [ICDM'21] <a href="https://github.com/resistzzz/GNRRW">(Original Code)</a></li>
   <li>COTREC: Self-Supervised Graph Co-Training for Session-based Recommendation [CIKM'21] <a href="https://github.com/xiaxin1998/COTREC">(Original Code)</a></li>
