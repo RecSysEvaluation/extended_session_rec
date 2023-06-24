@@ -42,9 +42,9 @@ algorithms:
 - class: CM_HGCN.CM_HGCN.CM_HGCN
   params: {epoch: 15, lr: 0.0003, batch_size: 100, embedding: 30, l2: 0.00001}  
   key: CM_HGCN
-#- class: COTREC.COTREC.COTRECModel
-#  params: {epoch: 1, lr: 0.001, batch_size: 200, embedding: 200, l2: 0.00001}
-#  key: COTREC
+- class: COTREC.COTREC.COTRECModel
+  params: {epoch: 10, lr: 0.009, batch_size: 128, embedding: 50, l2: 0.00001}
+  key: COTRECModel
 - class: FLCSP.FLCSP_cate.FLCSP_cate      
   params: {epoch: 15, lr: 0.001, batch_size: 100, embedding_size: 50, hidden_size: 100, dropout: 0.1, l2: 0.00001}
   key: FLCSP_cate
