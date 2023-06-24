@@ -12,16 +12,8 @@ from tqdm import tqdm
 import os
 
 
-def init_seed(seed):
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-
-USE_CUDA = torch.cuda.is_available()
-device = torch.device('cuda' if USE_CUDA else 'cpu')
-
-init_seed(2000)
+import warnings
+warnings.filterwarnings('ignore')
 
 class COTRECModel:
     def __init__(self, epoch = 1,  lr = 0.1, batch_size = 100, embedding = 50, l2 = 0.00005):
@@ -105,12 +97,15 @@ class COTRECModel:
         self.word2index = word2index
         self.index2wiord = index2wiord 
         train_data = (features, targets)
-        test_data = (features1, targets1)
+        
         self.features = features
         train_data = Data(train_data, self.features, shuffle=True, n_node=self.num_node)
-        #test_data = Data(test_data, self.features, shuffle=True, n_node=self.num_node)
-        model = COTREC(train_data.adjacency, self.num_node, self.lr, self.layer, self.l2, self.beta, self.lam, self.eps, self.embedding)
+        
+        model = COTREC(train_data.adjacency, self.num_node, self.lr, self.layer, self.l2, self.beta, self.lam, self.eps, self.embedding, device)
         model = model.to(device)
+        
+        #optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+        
         
         # start learning...... 
         for epoch in range(self.epoch):
@@ -124,9 +119,12 @@ class COTRECModel:
                 diff_mask = torch.Tensor(diff_mask).long()
                 diff_mask = diff_mask.to(device)
                 
+                
+                
                 A_hat, D_hat = train_data.get_overlap(session_item)
                 A_hat = torch.Tensor(A_hat)
                 D_hat = torch.Tensor(D_hat)
+                
                 A_hat = A_hat.to(device)
                 D_hat = D_hat.to(device)
                 
@@ -146,7 +144,7 @@ class COTRECModel:
                 reversed_sess_item = reversed_sess_item.to(device)
                 
                 model.optimizer.zero_grad()
-                con_loss, loss_item, scores_item, loss_diff = model(session_item, session_len, D_hat, A_hat, reversed_sess_item, mask,tar, diff_mask)
+                con_loss, loss_item, scores_item, loss_diff = model(session_item, session_len, D_hat, A_hat, reversed_sess_item, mask, tar, diff_mask)
                 loss = loss_item + con_loss + loss_diff
                 loss.backward()
                 model.optimizer.step()
