@@ -15,7 +15,7 @@ Python-based framework for building and evaluating recommender systems. It imple
 session-aware recommendation. More information about the SESSION REC FRAMEWORK can be <a href="https://rn5l.github.io/session-rec/index.html">found here.</a></p>
 <h5>The following session-based algorithms have been addded to the SESSION REC FRAMEWORK and named as EXTENDED SESSION REC FRAMEWORK</h5>
 <ul>
-  <li>GCE-GNN: Global Context Enhanced Graph Neural Networks for Session-based Recommendation [SIGIR'20]</li>
+  <li>GCE-GNN: Global Context Enhanced Graph Neural Networks for Session-based Recommendation [SIGIR'20]((Original Code)</li>
   <li>TAGNN: Target Attentive Graph Neural Networks for Session-based Recommendation [SIGIR'20]</li>
   <li>MGS: An Attribute-Driven Mirror Graph Network for Session-based Recommendation [SIGIR'22]</li>
   <li>GNRRW: Graph Neighborhood Routing and Random Walk for Session-based Recommendation [ICDM'21]</li>
