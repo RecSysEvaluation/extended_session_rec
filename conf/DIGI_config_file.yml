@@ -27,13 +27,13 @@ metrics:
 - class: time_memory_usage.Time_usage_testing
 algorithms:
 - class: knn.vstan.VSKNN_STAN
-  params: { k: 625 , sample_size: 891, lambda_spw: 0.94 , lambda_snh: 55, lambda_inh: 2.4 }
+  params: { k: 1500 , sample_size: 5500, lambda_spw: 0.11 , lambda_snh: 25, lambda_inh: 2.4, lambda_idf: 15 }
   key: stan
 - class: knn.stan.STAN
-  params: { k: 630 , sample_size: 3000, lambda_spw: 0.16 , lambda_snh: 530, lambda_inh: 0.57 }
+  params: { k: 700 , sample_size: 2800, lambda_spw: 0.12 , lambda_snh: 400, lambda_inh: 0.58 }
   key: stan
 - class: knn.vsknn_normal.VMContextKNN
-  params: { k: 624, sample_size: 888, weighting: same , weighting_score: div, idf_weighting: 5}
+  params: { k: 50, sample_size: 500, weighting: quadratic , weighting_score: quadratic, idf_weighting: 2}
   key: vsknn
 # GNN models
 - class: MGS.MGS.MGS
